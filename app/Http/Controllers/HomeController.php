@@ -12,12 +12,53 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $data = [
-            'title' => 'Home',
-        ];
         $berita = BeritaModels::all();
-        return view('HomeViews', compact('data', 'berita'));
+        return view('home.content.home', compact('berita'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function berita()
+    {
+        $berita = BeritaModels::all();
+        return view('home.content.berita', compact('berita'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function pengumuman()
+    {
+        $pengumuman = BeritaModels::all();
+        return view('home.content.pengumuman', compact('pengumuman'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function galeri()
+    {
+        $galeri = BeritaModels::all();
+        return view('home.content.galeri', compact('galeri'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function sejarah()
+    {
+        $sejarah = BeritaModels::all();
+        return view('home.content.sejarah', compact('sejarah'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function visimisi()
+    {
+        $visimisi = BeritaModels::all();
+        return view('home.content.visimisi', compact('visimisi'));
     }
 
     /**
