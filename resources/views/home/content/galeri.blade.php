@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="my-4">
-                            <a href="#" class="h4">Revisiting Your Investment & Distribution Goals</a>
+                            <a href="{{ asset('home/img/blog-1.jpg') }}" data-lightbox="blog-1" class="h4">Revisiting Your Investment & Distribution Goals</a>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="my-4">
-                            <a href="#" class="h4">Dimensional Fund Advisors Interview with Director</a>
+                            <a href="{{ asset('home/img/blog-2.jpg') }}" data-lightbox="blog-2" class="h4">Dimensional Fund Advisors Interview with Director</a>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="my-4">
-                            <a href="#" class="h4">Interested in Giving Back this year? Here are some tips</a>
+                            <a href="{{ asset('home/img/blog-3.jpg') }}" data-lightbox="blog-3" class="h4">Interested in Giving Back this year? Here are some tips</a>
                         </div>
                     </div>
                 </div>
