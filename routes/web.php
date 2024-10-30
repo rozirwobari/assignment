@@ -14,8 +14,12 @@ Route::get('/visimisi', [HomeController::class, 'visimisi']);
 
 // Dashboard
 Route::prefix('dashboard')->group(function () {
-    Route::get('/home', [DashboardController::class, 'index'])->name('home');
-    Route::get('/berita', [DashboardController::class, 'berita'])->name('berita');
+    Route::get('/home', [DashboardController::class, 'index']);
+    Route::get('/berita', [DashboardController::class, 'berita']);
+    Route::post('/namedesk', [DashboardController::class, 'namedesk']);
+    Route::post('/visimisi', [DashboardController::class, 'visimisi']);
+    Route::post('/addbanner', [DashboardController::class, 'addbanner']);
+    Route::post('/deletebanner', [DashboardController::class, 'deletebanner']);
 });
 
 

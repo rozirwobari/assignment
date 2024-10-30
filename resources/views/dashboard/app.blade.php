@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('dashboard/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('dashboard/img/favicon.png') }}">
     <title>
-        @yield('title') - {{ config('app.name') }}
+        @yield('title') - {{ $site->name }}
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -21,6 +21,9 @@
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
+    <link href="{{ asset('lib/lightbox2/css/lightbox.css') }}" rel="stylesheet" />
+    
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -160,6 +163,8 @@
         </div>
     </div>
     <!--   Core JS Files   -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('dashboard/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('dashboard/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dashboard/js/plugins/perfect-scrollbar.min.js') }}"></script>
@@ -356,6 +361,10 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('dashboard/js/soft-ui-dashboard.min.js?v=1.1.0') }}"></script>
+    <script src="{{ asset('lib/lightbox2/js/lightbox.js') }}"></script>
+
+
+    @yield('script')
 </body>
 
 </html>

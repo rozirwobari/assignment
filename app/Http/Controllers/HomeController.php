@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BeritaModels;
+use App\Models\WebSettingModels;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +14,16 @@ class HomeController extends Controller
     public function index()
     {
         $berita = BeritaModels::all();
-        return view('home.content.home', compact('berita'));
+        $site = WebSettingModels::all()->first();
+        $JsonGambar = json_decode($site->img);
+        $banner = [];
+        foreach ($JsonGambar as $key => $value) {
+            $banner[] = [
+                'id' => $key,
+                'img' => $value->img,
+            ];
+        }
+        return view('home.content.home', compact('berita', 'site', 'banner'));
     }
 
     /**
@@ -22,7 +32,8 @@ class HomeController extends Controller
     public function berita()
     {
         $berita = BeritaModels::all();
-        return view('home.content.berita', compact('berita'));
+        $site = WebSettingModels::all()->first();
+        return view('home.content.berita', compact('berita', 'site'));
     }
 
     /**
@@ -31,7 +42,8 @@ class HomeController extends Controller
     public function pengumuman()
     {
         $pengumuman = BeritaModels::all();
-        return view('home.content.pengumuman', compact('pengumuman'));
+        $site = WebSettingModels::all()->first();
+        return view('home.content.pengumuman', compact('pengumuman', 'site'));
     }
 
     /**
@@ -40,7 +52,8 @@ class HomeController extends Controller
     public function galeri()
     {
         $galeri = BeritaModels::all();
-        return view('home.content.galeri', compact('galeri'));
+        $site = WebSettingModels::all()->first();
+        return view('home.content.galeri', compact('galeri', 'site'));
     }
 
     /**
@@ -49,7 +62,8 @@ class HomeController extends Controller
     public function sejarah()
     {
         $sejarah = BeritaModels::all();
-        return view('home.content.sejarah', compact('sejarah'));
+        $site = WebSettingModels::all()->first();
+        return view('home.content.sejarah', compact('sejarah', 'site'));
     }
 
     /**
@@ -57,8 +71,8 @@ class HomeController extends Controller
      */
     public function visimisi()
     {
-        $visimisi = BeritaModels::all();
-        return view('home.content.visimisi', compact('visimisi'));
+        $site = WebSettingModels::all()->first();
+        return view('home.content.visimisi', compact('site'));
     }
 
     /**
