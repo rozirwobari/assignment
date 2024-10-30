@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\BeritaModels;
 use App\Models\WebSettingModels;
+use App\Models\KontakModels;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\KontakKami;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,15 +18,18 @@ class HomeController extends Controller
     {
         $berita = BeritaModels::all();
         $site = WebSettingModels::all()->first();
+        $kontak = KontakModels::all()->first();
         $JsonGambar = json_decode($site->img);
         $banner = [];
-        foreach ($JsonGambar as $key => $value) {
-            $banner[] = [
-                'id' => $key,
-                'img' => $value->img,
-            ];
+        if ($JsonGambar) {
+            foreach ($JsonGambar as $key => $value) {
+                $banner[] = [
+                    'id' => $key,
+                    'img' => $value->img,
+                ];
+            }
         }
-        return view('home.content.home', compact('berita', 'site', 'banner'));
+        return view('home.content.home', compact('berita', 'site', 'banner', 'kontak'));
     }
 
     /**
@@ -33,7 +39,8 @@ class HomeController extends Controller
     {
         $berita = BeritaModels::all();
         $site = WebSettingModels::all()->first();
-        return view('home.content.berita', compact('berita', 'site'));
+        $kontak = KontakModels::all()->first();
+        return view('home.content.berita', compact('berita', 'site', 'kontak'));
     }
 
     /**
@@ -43,7 +50,8 @@ class HomeController extends Controller
     {
         $pengumuman = BeritaModels::all();
         $site = WebSettingModels::all()->first();
-        return view('home.content.pengumuman', compact('pengumuman', 'site'));
+        $kontak = KontakModels::all()->first();
+        return view('home.content.pengumuman', compact('pengumuman', 'site', 'kontak'));
     }
 
     /**
@@ -53,7 +61,8 @@ class HomeController extends Controller
     {
         $galeri = BeritaModels::all();
         $site = WebSettingModels::all()->first();
-        return view('home.content.galeri', compact('galeri', 'site'));
+        $kontak = KontakModels::all()->first();
+        return view('home.content.galeri', compact('galeri', 'site', 'kontak'));
     }
 
     /**
@@ -63,7 +72,8 @@ class HomeController extends Controller
     {
         $sejarah = BeritaModels::all();
         $site = WebSettingModels::all()->first();
-        return view('home.content.sejarah', compact('sejarah', 'site'));
+        $kontak = KontakModels::all()->first();
+        return view('home.content.sejarah', compact('sejarah', 'site', 'kontak'));
     }
 
     /**
@@ -72,8 +82,45 @@ class HomeController extends Controller
     public function visimisi()
     {
         $site = WebSettingModels::all()->first();
-        return view('home.content.visimisi', compact('site'));
+        $kontak = KontakModels::all()->first();
+        return view('home.content.visimisi', compact('site', 'kontak'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function kontak()
+    {
+        $site = WebSettingModels::all()->first();
+        $kontak = KontakModels::all()->first();
+        return view('home.content.kontak', compact('site', 'kontak'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function kirimpesan(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'subject' => 'required|string',
+                'message' => 'required|string',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->validator)->withInput();
+        }
+
+        Mail::to('1rozirwobari@gmail.com')->send(new KontakKami($request->all()));
+
+        return back()->with('alert', [
+            'type' => 'success',
+            'message' => 'Pesan Berhasil Dikirim',
+            'title' => 'Berhasil'
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

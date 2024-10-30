@@ -30,10 +30,8 @@
                 </div>
                 <div class="col-lg-6 col-xl-7 wow fadeInRight" data-wow-delay="0.3s">
                     <h4 class="text-primary">Welcome</h4>
-                    <h1 class="display-5 mb-4">Selamat Datang Di Website ...</h1>
-                    <p class="text ps-4 mb-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestiae quaerat pariatur repudiandae, incidunt a sint sequi provident odit, culpa est harum veritatis natus? Qui adipisci id neque reiciendis eaque quasi cumque animi tenetur inventore praesentium voluptatibus illum, esse laboriosam dolores alias veniam voluptates soluta laudantium. Adipisci unde possimus molestias sunt nisi, quae repellat deleniti nam ipsa magnam iure quo magni aperiam corporis laudantium beatae ratione ea? Nulla, velit! Impedit molestiae, accusantium aspernatur sint consequatur voluptatum nisi vel quas non earum. Natus doloremque quidem id facilis inventore dignissimos sequi non dicta amet repellat cumque voluptates autem asperiores saepe eos mollitia debitis, aspernatur minima quibusdam nihil quisquam sapiente eius? Earum, maiores. Blanditiis exercitationem maxime similique ex quia ullam quasi consequatur, natus harum facere. Eligendi, qui sunt rem totam laboriosam eum temporibus, facere veniam ipsa animi iste eaque maiores accusantium sequi ad placeat quam sint deserunt! Ratione autem impedit numquam nam excepturi beatae?</p>
-                    
-                    
+                    <h1 class="display-5 mb-4">Selamat Datang Di {{ $site->nama }}</h1>
+                    <p class="text ps-4 mb-4">{!! $site->deskripsi !!}</p>
                 </div>
             </div>
         </div>

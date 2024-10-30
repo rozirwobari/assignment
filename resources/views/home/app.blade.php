@@ -127,8 +127,8 @@
                     <div class="col-md-4 col-lg-4 col-xl-7">
                         <div class="footer-item d-flex flex-column">
                             <div class="footer-item">
-                                <h4 class="text-white mb-4">Newsletter</h4>
-                                <p class="mb-3">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit.</p>
+                                <h4 class="text-white mb-4">{{ $site->name }}</h4>
+                                <p class="mb-3">{{ $site->deskripsi }}</p>
                             </div>
                         </div>
                     </div>
@@ -137,17 +137,15 @@
                             <h4 class="text-white mb-4">Menu Utama</h4>
                             <a href="{{ url('berita') }}"><i class="fas fa-angle-right me-2"></i> Berita</a>
                             <a href="{{ url('pengumuman') }}"><i class="fas fa-angle-right me-2"></i> Pengumuman</a>
-                            <a href="#"><i class="fas fa-angle-right me-2"></i> Kontak</a>
+                            <a href="{{ url('kontak') }}"><i class="fas fa-angle-right me-2"></i> Kontak</a>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3">
                         <div class="footer-item d-flex flex-column">
                             <h4 class="text-white mb-4">Contact Info</h4>
-                            <a href=""><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
-                            <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a>
-                            <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a>
-                            <a href=""><i class="fas fa-phone me-2"></i> +012 345 67890</a>
-                            <a href="" class="mb-3"><i class="fas fa-print me-2"></i> +012 345 67890</a>
+                            <a href=""><i class="fa fa-map-marker-alt me-2"></i> {{ $kontak->alamat }}</a>
+                            <a href=""><i class="fas fa-envelope me-2"></i> {{ $kontak->email }}</a>
+                            <a href=""><i class="fas fa-phone me-2"></i> {{ $kontak->telepon }}</a>
                             <div class="d-flex align-items-center">
                                 <a class="btn btn-light btn-md-square me-2" href=""><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-light btn-md-square me-2" href=""><i class="fab fa-twitter"></i></a>
@@ -167,7 +165,7 @@
             <div class="container">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-md-0">
-                        <span class="text-body"><a href="#" class="border-bottom text-primary"><i class="fas fa-copyright text-white me-2"></i><span style="color: rgb(173, 173, 173);">{{ config('app.name', 'RZW Website') }}</span></a>, All right Reserved.</span>
+                        <span class="text-body"><a href="{{ url('/') }}" class="border-bottom text-primary"><i class="fas fa-copyright text-white me-2"></i><span style="color: rgb(173, 173, 173);">{{ $site->name }}</span></a>, All right Reserved.</span>
                     </div>
                 </div>
             </div>
@@ -181,6 +179,8 @@
         
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('home/lib/wow/wow.min.js') }}"></script>
     <script src="{{ asset('home/lib/easing/easing.min.js') }}"></script>
@@ -188,10 +188,9 @@
     <script src="{{ asset('home/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('home/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('home/lib/lightbox/js/lightbox.min.js') }}"></script>
-    
+    @yield('script')
 
     <!-- Template Javascript -->
     <script src="{{ asset('home/js/main.js') }}"></script>
     </body>
-
 </html>
