@@ -16,8 +16,14 @@ Route::post('/kontak', [HomeController::class, 'kirimpesan']);
 // Dashboard
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [DashboardController::class, 'index']);
-    Route::get('/berita', [DashboardController::class, 'berita']);
+    Route::get('/berita', [DashboardController::class, 'berita'])->name('dashboard.berita');
     Route::get('/addberita', [DashboardController::class, 'addberita']);
+    Route::post('/addberita', [DashboardController::class, 'addedberita']);
+    Route::get('/editberita/{id}', [DashboardController::class, 'editberita']);
+    Route::post('/deletegambar', [DashboardController::class, 'deletegambar']);
+    Route::post('/updateberita', [DashboardController::class, 'updateberita']);
+
+    Route::post('/deleteberita', [DashboardController::class, 'deleteberita']);
     Route::post('/namedesk', [DashboardController::class, 'namedesk']);
     Route::post('/visimisi', [DashboardController::class, 'visimisi']);
     Route::post('/addbanner', [DashboardController::class, 'addbanner']);

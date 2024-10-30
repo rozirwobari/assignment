@@ -23,7 +23,7 @@ class DashboardController extends Controller
         if ($JsonGambar) {
             foreach ($JsonGambar as $key => $value) {
                 $banner[] = [
-                    'id' => $key,
+                    'id' => $value->id,
                     'img' => $value->img,
                 ];
             }
@@ -34,7 +34,7 @@ class DashboardController extends Controller
     public function berita()
     {
         $site = WebSettingModels::all()->first();
-        $berita = BeritaModels::all();
+        $berita = BeritaModels::orderBy('created_at', 'desc')->get();
         return view('dashboard.content.berita', compact('site', 'berita'));
     }
 
@@ -45,11 +45,135 @@ class DashboardController extends Controller
         return view('dashboard.content.addberita', compact('site', 'berita'));
     }
 
+    public function addedberita(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'judul' => 'required',
+                'deskripsi' => 'required',
+                'gambar' => 'required|array',
+                'gambar.*' => 'image',
+            ], [
+                'judul.required' => 'Judul Wajib di isi',
+                'deskripsi.required' => 'Deskripsi Wajib di isi',
+                'gambar.required' => 'Gambar Wajib di isi',
+                'gambar.*.image' => 'Hanya file gambar yang diperbolehkan',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors());
+        }
+
+        $gambar = $request->file('gambar');
+        $DataGambar = [];
+        foreach ($gambar as $key => $file) {
+            $gambarName = Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('home/img/berita'), $gambarName);
+            $DataGambar[] = [
+                'id' => rand(1000, 9999),
+                'img' => 'home/img/berita/' . $gambarName,
+            ];
+        }
+
+        // dd($DataGambar);
+
+        BeritaModels::create([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'img' => json_encode($DataGambar),
+        ]);
+        return redirect()->route('dashboard.berita')->with('alert', [
+            'type' => 'success',
+            'message' => 'Berita Berhasil Ditambah',
+            'title' => 'Berhasil'
+        ]);
+    }
+
+    public function updateberita(Request $request)
+    {
+        $id = $request->id;
+        $inputGambar = $request->gambar;
+        $berita = BeritaModels::find($id);
+        $dataGambar = json_decode($berita->img);
+        
+        $Gambar = [];
+        $GambarBaru = [];
+        foreach ($dataGambar as $key => $value) {
+            $Gambar[] = [
+                'id' => $value->id,
+                'img' => $value->img,
+            ];
+        }
+
+        if ($inputGambar) {
+            foreach ($inputGambar as $key => $value) {
+                $gambarName = Str::random(10) . '.' . $value->getClientOriginalExtension();
+                $value->move(public_path('home/img/berita'), $gambarName);
+                $GambarBaru[] = [
+                    'id' => rand(1000, 9999),
+                    'img' => 'home/img/berita/' . $gambarName,
+                ];
+            }
+        }
+        $DataGambar = array_merge($Gambar, $GambarBaru);
+        BeritaModels::find($id)->update([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'img' => json_encode($DataGambar),
+        ]);
+        return redirect()->route('dashboard.berita')->with('alert', [
+            'type' => 'success',
+            'message' => 'Berita Berhasil Diubah',
+            'title' => 'Berhasil'
+        ]);
+    }
+
+    public function deleteberita(Request $request)
+    {
+        $id = $request->id;
+        $berita = BeritaModels::find($id);
+        $dataGambar = json_decode($berita->img);
+        foreach ($dataGambar as $key => $value) {
+            if (file_exists(public_path($value->img))) {
+                unlink(public_path($value->img));
+            }
+        }
+        BeritaModels::find($id)->delete();
+        return response()->json(['success' => true]);
+    }
+
     public function editberita($id)
     {
         $site = WebSettingModels::all()->first();
         $berita = BeritaModels::find($id);
-        return view('dashboard.content.berita', compact('site', 'berita'));
+        $gambar = json_decode($berita->img);
+        return view('dashboard.content.editberita', compact('site', 'berita', 'gambar'));
+    }
+
+    public function deletegambar(Request $request)
+    {
+        $id_berita = $request->id_berita;
+        $id_gambar = $request->id_gambar;
+
+        $berita = BeritaModels::find($id_berita);
+        $gambar = json_decode($berita->img);
+        $GambarBaru = [];
+        foreach ($gambar as $key => $value) {
+            if ($value->id == $id_gambar) {
+                if (file_exists(public_path($value->img))) {
+                    unlink(public_path($value->img));
+                }
+                unset($gambar[$key]);
+            } else {
+                $GambarBaru[] = [
+                    'id' => $value->id,
+                    'img' => $value->img,
+                ];
+            }
+        }
+        $berita->update([
+            'img' => json_encode($GambarBaru),
+        ]);
+        return response()->json(['success' => true]);
     }
 
     public function namedesk(Request $request)
@@ -100,7 +224,7 @@ class DashboardController extends Controller
         if ($dataGambar) {
             foreach ($dataGambar as $key => $value) {
                 $dataBanner[] = [
-                    'id' => $key,
+                    'id' => rand(1000, 9999),
                     'img' => $value->img,
                 ];
             }
@@ -112,7 +236,7 @@ class DashboardController extends Controller
         $banner->move(public_path('home/img/banner'), $bannerName);
 
         $dataBanner[] = [
-            'id' => ($count + 1),
+            'id' => rand(1000, 9999),
             'img' => 'home/img/banner/' . $bannerName,
         ];
 
@@ -129,23 +253,22 @@ class DashboardController extends Controller
 
     public function deletebanner(Request $request)
     {
-        $id = $request->id;
+        $id = $request->id_banner;
         $site = WebSettingModels::all()->first();
         $dataGambar = json_decode($site->img);
-
         foreach ($dataGambar as $key => $value) {
-            if ($key == $id) {
+            if ($value->id == $id) {
                 if (file_exists(public_path($value->img))) {
                     unlink(public_path($value->img));
                 }
-                unset($dataGambar[$id]);
+                unset($dataGambar[$key]);
             }
         }
 
         $dataBanner = [];
         foreach ($dataGambar as $key => $value) {
             $dataBanner[] = [
-                'id' => $key,
+                'id' => $value->id,
                 'img' => $value->img,
             ];
         }

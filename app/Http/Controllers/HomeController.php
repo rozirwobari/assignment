@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $berita = BeritaModels::all();
+        $berita = BeritaModels::orderBy('created_at', 'desc')->get();
         $site = WebSettingModels::all()->first();
         $kontak = KontakModels::all()->first();
         $JsonGambar = json_decode($site->img);
@@ -37,7 +37,7 @@ class HomeController extends Controller
      */
     public function berita()
     {
-        $berita = BeritaModels::all();
+        $berita = BeritaModels::orderBy('created_at', 'desc')->get();
         $site = WebSettingModels::all()->first();
         $kontak = KontakModels::all()->first();
         return view('home.content.berita', compact('berita', 'site', 'kontak'));

@@ -79,7 +79,7 @@
                             </a>
                             <form action="{{ url('dashboard/deletebanner') }}" method="post">
                                 @csrf
-                                <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                <input type="hidden" name="id_banner" value="{{ $item['id'] }}">
                                 <button type="submit" class="btn btn-primary mt-3">Hapus</button>
                             </form>
                         </div>

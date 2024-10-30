@@ -555,9 +555,6 @@
     transition: 0.5s;
 }
 
-.service .service-item:hover .service-content .service-content-inner a.h4:hover {
-    color: var(--bs-primary) !important;
-}
 /*** Service End ***/
 
 /*** Project Start ***/

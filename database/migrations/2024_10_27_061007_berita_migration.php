@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->mediumText('judul')->nullable();
             $table->longText('deskripsi')->nullable();
-            $table->string('kategori', 250)->nullable();
+            $table->longText('img')->charset('utf8mb4')->collation('utf8mb4_bin')->default('[]');
             $table->timestamps(); // Menambahkan kolom created_at dan updated_at
         });
     }
