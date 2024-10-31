@@ -68,7 +68,7 @@ class DashboardController extends Controller
         $DataGambar = [];
         foreach ($gambar as $key => $file) {
             $gambarName = Str::random(10) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('home/img/berita'), $gambarName);
+            $file->move('home/img/berita', $gambarName);
             $DataGambar[] = [
                 'id' => rand(1000, 9999),
                 'img' => 'home/img/berita/' . $gambarName,
@@ -108,7 +108,7 @@ class DashboardController extends Controller
         if ($inputGambar) {
             foreach ($inputGambar as $key => $value) {
                 $gambarName = Str::random(10) . '.' . $value->getClientOriginalExtension();
-                $value->move(public_path('home/img/berita'), $gambarName);
+                $value->move('home/img/berita', $gambarName);
                 $GambarBaru[] = [
                     'id' => rand(1000, 9999),
                     'img' => 'home/img/berita/' . $gambarName,
@@ -134,8 +134,8 @@ class DashboardController extends Controller
         $berita = BeritaModels::find($id);
         $dataGambar = json_decode($berita->img);
         foreach ($dataGambar as $key => $value) {
-            if (file_exists(public_path($value->img))) {
-                unlink(public_path($value->img));
+            if (file_exists($value->img)) {
+                unlink($value->img);
             }
         }
         BeritaModels::find($id)->delete();
@@ -160,8 +160,8 @@ class DashboardController extends Controller
         $GambarBaru = [];
         foreach ($gambar as $key => $value) {
             if ($value->id == $id_gambar) {
-                if (file_exists(public_path($value->img))) {
-                    unlink(public_path($value->img));
+                if (file_exists($value->img)) {
+                    unlink($value->img);
                 }
                 unset($gambar[$key]);
             } else {
@@ -224,9 +224,9 @@ class DashboardController extends Controller
         if ($request->hasFile('favicon')) {
             $favicon = $request->file('favicon');
             $faviconName = Str::random(10) . '.' . $favicon->getClientOriginalExtension();
-            $favicon->move(public_path('home/img/favicon'), $faviconName);
-            if (file_exists(public_path($site->favicon))) {
-                unlink(public_path($site->favicon));
+            $favicon->move('home/img/favicon', $faviconName);
+            if (file_exists($site->favicon)) {
+                unlink($site->favicon);
             }
             $site->update([
                 'favicon' => 'home/img/favicon/' . $faviconName,
@@ -274,7 +274,7 @@ class DashboardController extends Controller
         
         $banner = $request->file('banner');
         $bannerName = Str::random(10) . '.' . $banner->getClientOriginalExtension();
-        $banner->move(public_path('home/img/banner'), $bannerName);
+        $banner->move('home/img/banner', $bannerName);
 
         $dataBanner[] = [
             'id' => rand(1000, 9999),
@@ -299,8 +299,8 @@ class DashboardController extends Controller
         $dataGambar = json_decode($site->img);
         foreach ($dataGambar as $key => $value) {
             if ($value->id == $id) {
-                if (file_exists(public_path($value->img))) {
-                    unlink(public_path($value->img));
+                if (file_exists($value->img)) {
+                    unlink($value->img);
                 }
                 unset($dataGambar[$key]);
             }
@@ -400,7 +400,7 @@ class DashboardController extends Controller
         
         $gambar = $request->file('gambar');
         $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
-        $gambar->move(public_path('home/img/galeri'), $gambarName);
+        $gambar->move('home/img/galeri', $gambarName);
         $deskripsi = $request->deskripsi;
 
         GaleriModels::create([
@@ -454,7 +454,7 @@ class DashboardController extends Controller
             }
 
             $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
-            $gambar->move(public_path('home/img/galeri'), $gambarName);
+            $gambar->move('home/img/galeri', $gambarName);
             $GambarNew = 'home/img/galeri/' . $gambarName;
             if (file_exists($DataGaleri->img)) {
                 unlink($DataGaleri->img);
