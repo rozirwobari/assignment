@@ -948,3 +948,8 @@
     background: var(--bs-dark) !important;
 }
 /*** copyright end ***/
+
+.rzw-dropdown-item:hover {
+    background: var(--bs-primary) !important;
+    color: var(--bs-white) !important;
+}

@@ -22,7 +22,7 @@
         <link href="{{ asset('home/lib/animate/animate.min.css') }}" rel="stylesheet">
         <link href="{{ asset('home/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
         <link href="{{ asset('home/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
-
+        <link rel="icon" type="image/png" href="{{ asset($site->favicon) }}">
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{{ asset('home/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -47,9 +47,9 @@
                 <div class="row gx-0 align-items-center" style="height: 45px;">
                     <div class="col-lg-8 text-center text-lg-start mb-lg-0">
                         <div class="d-flex flex-wrap">
-                            <a href="#" class="text-muted me-4"><i class="fas fa-map-marker-alt text-primary me-2 text-white"></i><span style="color: #ffffffa8;">Find A Location</span></a>
-                            <a href="#" class="text-muted me-4"><i class="fas fa-phone-alt text-primary me-2 text-white"></i><span style="color: #ffffffa8;">+01234567890</span></a>
-                            <a href="#" class="text-muted me-0"><i class="fas fa-envelope text-primary me-2 text-white"></i><span style="color: #ffffffa8;">Example@gmail.com</span></a>
+                            <div class="text-muted me-4"><i class="fas fa-map-marker-alt text-primary me-2 text-white"></i><span style="color: #ffffffa8;">{{ $kontak->alamat }}</span></div>
+                            <div class="text-muted me-4"><i class="fas fa-phone-alt text-primary me-2 text-white"></i><span style="color: #ffffffa8;">{{ $kontak->telepon }}</span></div>
+                            <div class="text-muted me-0"><i class="fas fa-envelope text-primary me-2 text-white"></i><span style="color: #ffffffa8;">{{ $kontak->email }}</span></div>
                         </div>
                     </div>
                     <div class="col-lg-4 text-center text-lg-end">
@@ -105,7 +105,15 @@
                                 <div class="dropdown-menu m-0">
                                     <a href="{{ url('publikasi') }}" class="dropdown-item">Publikasi</a>
                                     <a href="{{ url('kontak') }}" class="dropdown-item">Kontak Kami</a>
-                                    <a href="{{ url('login') }}" class="dropdown-item">Login Admin</a>
+                                    @if (Auth::check())
+                                        <a href="{{ url('dashboard/home') }}" class="dropdown-item">Dashboard</a>
+                                        <form action="{{ url('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item rzw-dropdown-item">Logout</button>
+                                        </form>
+                                    @else
+                                        <a href="{{ url('login') }}" class="dropdown-item">Login</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WebSettingModels;
 use App\Models\KontakModels;
 use App\Models\BeritaModels;
+use App\Models\GaleriModels;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -205,6 +206,46 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function favicon(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'favicon' => 'required|image|mimes:jpg,jpeg,png',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->with('alert', [
+                'type' => 'error',
+                'message' => 'Gagal menambahkan favicon',
+                'title' => 'Error'
+            ]);
+        }
+
+        $site = WebSettingModels::all()->first();
+        if ($request->hasFile('favicon')) {
+            $favicon = $request->file('favicon');
+            $faviconName = Str::random(10) . '.' . $favicon->getClientOriginalExtension();
+            $favicon->move(public_path('home/img/favicon'), $faviconName);
+            if (file_exists(public_path($site->favicon))) {
+                unlink(public_path($site->favicon));
+            }
+            $site->update([
+                'favicon' => 'home/img/favicon/' . $faviconName,
+            ]);
+
+            return redirect()->back()->with('alert', [
+                'type' => 'success',
+                'message' => 'Favicon Berhasil Diubah',
+                'title' => 'Berhasil'
+            ]);
+        }
+
+        return redirect()->back()->with('alert', [
+            'type' => 'warning',
+            'message' => 'Tidak Ada Perubahan Di Favicon',
+            'title' => 'Warning'
+        ]);
+    }
+
     public function addbanner(Request $request)
     {
         try {
@@ -323,5 +364,127 @@ class DashboardController extends Controller
             'message' => 'Kontak Berhasil Diubah',
             'title' => 'Berhasil'
         ]);
+    }
+
+
+    public function galeri()
+    {
+        $site = WebSettingModels::all()->first();
+        $galeri = GaleriModels::orderBy('created_at', 'desc')->get();
+        return view('dashboard.content.galeri', compact('site', 'galeri'));
+    }
+
+    public function addgaleri()
+    {
+        $site = WebSettingModels::all()->first();
+        return view('dashboard.content.addgaleri', compact('site'));
+    }
+
+    public function addedgaleri(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'deskripsi' => 'required',
+                'gambar' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ], [
+                'deskripsi.required' => 'Deskripsi harus diisi.',
+                'gambar.required' => 'Gambar harus diisi.',
+                'gambar.file' => 'Gambar harus berupa file.',
+                'gambar.image' => 'Gambar harus berupa gambar.',
+                'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG.',
+                'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 2048 KB.',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+        
+        $gambar = $request->file('gambar');
+        $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
+        $gambar->move(public_path('home/img/galeri'), $gambarName);
+        $deskripsi = $request->deskripsi;
+
+        GaleriModels::create([
+            'deskripsi' => $deskripsi,
+            'img' => 'home/img/galeri/' . $gambarName,
+        ]);
+        return redirect()->route('dashboard.galeri')->with('alert', [
+            'type' => 'success',
+            'message' => 'Gambar Berhasil Ditambah',
+            'title' => 'Berhasil'
+        ]);
+    }
+
+    public function editgaleri($id)
+    {
+        $site = WebSettingModels::all()->first();
+        $galeri = GaleriModels::find($id);
+        return view('dashboard.content.editgaleri', compact('site', 'galeri'));
+    }
+
+    public function updategaleri(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'deskripsi' => 'required',
+            ], [
+                'deskripsi.required' => 'Deskripsi harus diisi.',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+
+        $id_galeri = $request->id_galeri;
+        $DataGaleri = GaleriModels::find($id_galeri);
+        $GambarNew = $DataGaleri->img;
+
+        $gambar = $request->file('gambar');
+        if ($gambar) {
+            try {
+                $validatedData = $request->validate([
+                    'gambar' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ], [
+                    'gambar.required' => 'Gambar harus diisi.',
+                    'gambar.file' => 'Gambar harus berupa file.',
+                    'gambar.image' => 'Gambar harus berupa gambar.',
+                    'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG.',
+                    'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 2048 KB.',
+                ]);
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return redirect()->back()->withErrors($e->errors())->withInput();
+            }
+
+            $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
+            $gambar->move(public_path('home/img/galeri'), $gambarName);
+            $GambarNew = 'home/img/galeri/' . $gambarName;
+            if (file_exists($DataGaleri->img)) {
+                unlink($DataGaleri->img);
+            }
+        }
+        
+        $DataGaleri->update([
+            'deskripsi' => $request->deskripsi,
+            'img' => $GambarNew,
+        ]);
+        return redirect()->route('dashboard.galeri')->with('alert', [
+            'type' => 'success',
+            'message' => 'Gambar Berhasil Diubah',
+            'title' => 'Berhasil'
+        ]);
+    }
+
+    public function deletegaleri(Request $request)
+    {
+        $id = $request->id;
+        $DataGaleri = GaleriModels::find($id);
+        if (file_exists($DataGaleri->img)) {
+            unlink($DataGaleri->img);
+        }
+        $DataGaleri->delete();
+        session()->flash('alert', [
+            'type' => 'success',
+            'message' => 'Galeri Berhasil Dihapus',
+            'title' => 'Berhasil'
+        ]);
+        return response()->json(['success' => true]);
     }
 }

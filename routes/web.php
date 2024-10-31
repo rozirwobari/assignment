@@ -22,7 +22,6 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/editberita/{id}', [DashboardController::class, 'editberita']);
     Route::post('/deletegambar', [DashboardController::class, 'deletegambar']);
     Route::post('/updateberita', [DashboardController::class, 'updateberita']);
-
     Route::post('/deleteberita', [DashboardController::class, 'deleteberita']);
     Route::post('/namedesk', [DashboardController::class, 'namedesk']);
     Route::post('/visimisi', [DashboardController::class, 'visimisi']);
@@ -30,6 +29,13 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/deletebanner', [DashboardController::class, 'deletebanner']);
     Route::get('/kontak', [DashboardController::class, 'kontak']);
     Route::post('/kontak', [DashboardController::class, 'updatekontak']);
+    Route::get('/galeri', [DashboardController::class, 'galeri'])->name('dashboard.galeri');
+    Route::get('/addgaleri', [DashboardController::class, 'addgaleri']);
+    Route::post('/addgaleri', [DashboardController::class, 'addedgaleri']);
+    Route::get('/editgaleri/{id}', [DashboardController::class, 'editgaleri']);
+    Route::post('/updategaleri', [DashboardController::class, 'updategaleri']);
+    Route::post('/deletegaleri', [DashboardController::class, 'deletegaleri']);
+    Route::post('/favicon', [DashboardController::class, 'favicon']);
 });
 
 

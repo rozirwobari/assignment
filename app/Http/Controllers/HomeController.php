@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\BeritaModels;
 use App\Models\WebSettingModels;
 use App\Models\KontakModels;
-use Illuminate\Support\Facades\Mail;
+use App\Models\GaleriModels;
+use App\Models\User;
 use App\Mail\KontakKami;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,8 +19,10 @@ class HomeController extends Controller
     public function index()
     {
         $berita = BeritaModels::orderBy('created_at', 'desc')->get();
+        $users = User::where('superadmin', 0)->get();
         $site = WebSettingModels::all()->first();
         $kontak = KontakModels::all()->first();
+        $galeri = GaleriModels::orderBy('created_at', 'desc')->get();
         $JsonGambar = json_decode($site->img);
         $banner = [];
         if ($JsonGambar) {
@@ -29,7 +33,7 @@ class HomeController extends Controller
                 ];
             }
         }
-        return view('home.content.home', compact('berita', 'site', 'banner', 'kontak'));
+        return view('home.content.home', compact('berita', 'site', 'banner', 'kontak', 'galeri', 'users'));
     }
 
     /**
@@ -59,7 +63,7 @@ class HomeController extends Controller
      */
     public function galeri()
     {
-        $galeri = BeritaModels::all();
+        $galeri = GaleriModels::orderBy('created_at', 'desc')->get();
         $site = WebSettingModels::all()->first();
         $kontak = KontakModels::all()->first();
         return view('home.content.galeri', compact('galeri', 'site', 'kontak'));

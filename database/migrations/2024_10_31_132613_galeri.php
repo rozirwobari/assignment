@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('galery', function (Blueprint $table) {
+        Schema::create('galeri', function (Blueprint $table) {
             $table->id();
-            $table->longText('img')->nullable();
-            $table->longText('deskripsi')->nullable();
-            $table->timestamps(); // Menambahkan kolom created_at dan updated_at
+            $table->mediumText('img')->nullable();
+            $table->mediumText('deskripsi')->nullable();
+            $table->timestamps(); // Adds 'created_at' and 'updated_at' columns
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galery');
+        Schema::dropIfExists('galeri');
     }
 };

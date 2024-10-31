@@ -24613,6 +24613,7 @@ html {
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active {
   color: #27272a;
   background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
