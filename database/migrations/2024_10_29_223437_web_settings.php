@@ -29,7 +29,7 @@ return new class extends Migration
             'name' => 'RZW Project',
             'deskripsi' => 'RZW Project Deskripsi',
             'favicon' => null,
-            'img' => null,
+            'img' => '[]',
             'visi' => null,
             'misi' => null,
             'sejarah' => 'RZW Project Sejarah',
