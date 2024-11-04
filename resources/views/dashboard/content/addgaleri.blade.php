@@ -19,8 +19,8 @@
                                     @enderror
                                 </div>
                                 <div class="card-body py-2">
-                                    <label for="gambar">Gambar</label>
-                                    <input type="file" class="form-control @error('gambar') is-invalid @enderror" name="gambar" id="gambar">
+                                    <label for="gambar">Gambar/Video</label>
+                                    <input type="file" class="form-control @error('gambar') is-invalid @enderror" name="gambar" id="gambar" accept=".jpeg, .png, .jpg, .gif, .svg, .mp4, .avi">
                                     @error('gambar')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -51,20 +51,29 @@
             for (let i = 0; i < files.length; i++) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '200px';
-                    img.style.height = '200px';
-                    img.style.objectFit = 'cover';
-                    img.style.borderRadius = '1vh';
-                    img.style.margin = '10px';
-                    const div = document.createElement('div');
-                    const a = document.createElement('a');
-                    a.href = e.target.result;
-                    a.setAttribute('data-lightbox', 'roadtrip');
-                    a.appendChild(img);
-                    div.appendChild(a);
-                    container.appendChild(div);
+                    if (files[i].type.includes('image')) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.width = '200px';
+                        img.style.height = '200px';
+                        img.style.objectFit = 'cover';
+                        img.style.borderRadius = '1vh';
+                        img.style.margin = '10px';
+                        const div = document.createElement('div');
+                        const a = document.createElement('a');
+                        a.href = e.target.result;
+                        a.setAttribute('data-lightbox', 'roadtrip');
+                        a.appendChild(img);
+                        div.appendChild(a);
+                        container.appendChild(div);
+                    } else if (files[i].type.includes('video')) {
+                        container.innerHTML += `
+                            <video class="img-fluid shadow border-radius-md" style="object-fit: cover; height: auto; width: 50vh;" controls>
+                                <source src="${e.target.result}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `;
+                    }
                 };
                 reader.readAsDataURL(files[i]);
             }

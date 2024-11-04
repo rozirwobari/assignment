@@ -36,6 +36,9 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/updategaleri', [DashboardController::class, 'updategaleri']);
     Route::post('/deletegaleri', [DashboardController::class, 'deletegaleri']);
     Route::post('/favicon', [DashboardController::class, 'favicon']);
+    Route::get('/account', [DashboardController::class, 'account'])->name('dashboard.account');
+    Route::get('/editaccount/{id}', [DashboardController::class, 'editaccount']);
+    Route::post('/updateaccount', [DashboardController::class, 'updateaccount']);
 });
 
 

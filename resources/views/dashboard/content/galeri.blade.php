@@ -16,7 +16,7 @@
                             <div class="card h-100 card-plain border">
                                 <div class="card-body d-flex flex-column justify-content-center text-center">
                                     <i class="fa fa-plus text-secondary mb-3"></i>
-                                    <h5 class=" text-secondary"> Tambah Gambar </h5>
+                                    <h5 class=" text-secondary"> Tambah Gambar/Video </h5>
                                 </div>
                             </div>
                         </a>
@@ -26,9 +26,18 @@
                     <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 p-3">
                         <div class="card card-blog card-plain">
                             <div class="position-relative">
-                                <a class="d-block" data-lightbox="roadtrip" href="{{ asset("$item->img") }}">
-                                    <img src="{{ asset("$item->img") }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-md" style="object-fit: cover; height: 250px; width: 100%;">
-                                </a>
+                                @if(pathinfo($item->img, PATHINFO_EXTENSION) == 'mp4')
+                                    <a class="d-block" data-fancybox="video-gallery-{{ $item->id }}" href="{{ asset("$item->img") }}">
+                                        <video class="img-fluid shadow border-radius-md" style="object-fit: cover; height: 250px; width: 100%;">
+                                            <source src="{{ asset("$item->img") }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </a>
+                                @else
+                                    <a class="d-block" data-lightbox="roadtrip" href="{{ asset("$item->img") }}">
+                                        <img src="{{ asset("$item->img") }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-md" style="object-fit: cover; height: 250px; width: 100%;">
+                                    </a>
+                                @endif
                             </div>
                             <div class="card-body px-1 pb-0">
                                 <p class="text-secondary mb-0 text-sm pb-2"><strong>{{ $item->created_at->format('d M Y | H:i:s') }}</strong></p>
@@ -104,3 +113,5 @@
         }
     </script>
 @endsection
+
+

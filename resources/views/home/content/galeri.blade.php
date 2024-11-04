@@ -27,13 +27,24 @@
                 <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="blog-item bg-light rounded p-4" style="background-image: url(img/bg.png);">
                         <div class="project-img">
-                            <img src="{{ asset($item->img) }}" class="img-fluid w-100 rounded" alt="Image" style="object-fit: cover; height: 250px; width: 100%;">
+                            @if(pathinfo($item->img, PATHINFO_EXTENSION) == 'mp4')
+                                <video class="img-fluid w-100 rounded" style="object-fit: cover; height: 250px;">
+                                    <source src="{{ asset($item->img) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ asset($item->img) }}" class="img-fluid w-100 rounded" alt="Image" style="object-fit: cover; height: 250px;">
+                            @endif
                             <div class="blog-plus-icon">
-                                <a href="{{ asset($item->img) }}" data-lightbox="blog-1" class="btn btn-primary btn-md-square rounded-pill"><i class="fas fa-plus fa-1x"></i></a>
+                                <a data-fancybox="video-gallery-{{ $item->id }}" href="{{ asset($item->img) }}" class="btn btn-primary btn-md-square rounded-pill">
+                                    <i class="fas fa-plus fa-1x"></i>
+                                </a>
                             </div>
                         </div>
                         <div class="my-4">
-                            <a href="{{ asset($item->img) }}" data-lightbox="blog-1" class="h6">{{ Str::limit($item->deskripsi, 100) }}</a>
+                            <a data-fancybox="video-gallery-text-{{ $item->id }}" href="{{ asset($item->img) }}" class="h6">
+                                {{ Str::limit($item->deskripsi, 100) }}
+                            </a>
                         </div>
                     </div>
                 </div>

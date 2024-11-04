@@ -20,8 +20,8 @@
                                     @enderror
                                 </div>
                                 <div class="card-body py-2">
-                                    <label for="gambar">Gambar</label>
-                                    <input type="file" class="form-control @error('gambar') is-invalid @enderror" name="gambar" id="gambar">
+                                    <label for="gambar">Gambar/Video</label>
+                                    <input type="file" class="form-control @error('gambar') is-invalid @enderror" name="gambar" id="gambar" accept=".jpeg, .png, .jpg, .gif, .svg, .mp4, .avi">
                                     @error('gambar')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -29,9 +29,16 @@
                                 <div class="container">
                                     <div class="row">
                                         <div id="gambar-preview" class="d-flex justify-content-center">
-                                            <a href="{{ asset($galeri->img) }}" data-lightbox="roadtrip" style="width: 200px; height: 200px; object-fit: cover; border-radius: 1vh; margin: 10px;">
-                                                <img src="{{ asset($galeri->img) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
-                                            </a>
+                                            @if(pathinfo($galeri->img, PATHINFO_EXTENSION) == 'mp4')
+                                                <video controls class="img-fluid shadow border-radius-md" style="object-fit: cover; height: auto; width: 50vh;">
+                                                    <source src="{{ asset($galeri->img) }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            @else
+                                                <a href="{{ asset($galeri->img) }}" data-lightbox="roadtrip" style="width: 200px; height: 200px; object-fit: cover; border-radius: 1vh; margin: 10px;">
+                                                    <img src="{{ asset($galeri->img) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -56,20 +63,35 @@
             for (let i = 0; i < files.length; i++) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '200px';
-                    img.style.height = '200px';
-                    img.style.objectFit = 'cover';
-                    img.style.borderRadius = '1vh';
-                    img.style.margin = '10px';
-                    const div = document.createElement('div');
-                    const a = document.createElement('a');
-                    a.href = e.target.result;
-                    a.setAttribute('data-lightbox', 'roadtrip');
-                    a.appendChild(img);
-                    div.appendChild(a);
-                    container.appendChild(div);
+                    if (files[i].type.includes('image')) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.width = '200px';
+                        img.style.height = '200px';
+                        img.style.objectFit = 'cover';
+                        img.style.borderRadius = '1vh';
+                        img.style.margin = '10px';
+                        const div = document.createElement('div');
+                        const a = document.createElement('a');
+                        a.href = e.target.result;
+                        a.setAttribute('data-lightbox', 'roadtrip');
+                        a.appendChild(img);
+                        div.appendChild(a);
+                        container.appendChild(div);
+                    } else if (files[i].type.includes('video')) {
+                        const video = document.createElement('video');
+                        video.src = e.target.result;
+                        video.style.width = '50vh';
+                        video.style.height = 'auto';
+                        video.style.objectFit = 'cover';
+                        video.style.borderRadius = '1vh';
+                        video.style.margin = '10px';
+                        video.autoplay = true;
+                        video.loop = true;
+                        video.muted = true;
+                        video.playsInline = true;
+                        container.appendChild(video);
+                    }
                 };
                 reader.readAsDataURL(files[i]);
             }

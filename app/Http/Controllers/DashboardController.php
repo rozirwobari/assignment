@@ -6,6 +6,7 @@ use App\Models\WebSettingModels;
 use App\Models\KontakModels;
 use App\Models\BeritaModels;
 use App\Models\GaleriModels;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -385,14 +386,13 @@ class DashboardController extends Controller
         try {
             $validatedData = $request->validate([
                 'deskripsi' => 'required',
-                'gambar' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'gambar' => 'required|file|mimes:jpeg,png,jpg,gif,svg,mp4,avi|max:204800',
             ], [
                 'deskripsi.required' => 'Deskripsi harus diisi.',
                 'gambar.required' => 'Gambar harus diisi.',
                 'gambar.file' => 'Gambar harus berupa file.',
-                'gambar.image' => 'Gambar harus berupa gambar.',
-                'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG.',
-                'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 2048 KB.',
+                'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, SVG, MP4, atau AVI.',
+                'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 200 MB.',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->errors())->withInput();
@@ -441,13 +441,13 @@ class DashboardController extends Controller
         if ($gambar) {
             try {
                 $validatedData = $request->validate([
-                    'gambar' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'gambar' => 'required|file|mimes:jpeg,png,jpg,gif,svg,mp4,avi|max:204800',
                 ], [
                     'gambar.required' => 'Gambar harus diisi.',
                     'gambar.file' => 'Gambar harus berupa file.',
-                    'gambar.image' => 'Gambar harus berupa gambar.',
-                    'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, atau SVG.',
-                    'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 2048 KB.',
+                    'gambar.image' => 'Gambar harus berupa gambar/video.',
+                    'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, SVG, MP4, atau AVI.',
+                    'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 200 MB.',
                 ]);
             } catch (\Illuminate\Validation\ValidationException $e) {
                 return redirect()->back()->withErrors($e->errors())->withInput();
@@ -486,5 +486,81 @@ class DashboardController extends Controller
             'title' => 'Berhasil'
         ]);
         return response()->json(['success' => true]);
+    }
+
+    public function account()
+    {
+        $site = WebSettingModels::all()->first();
+        $accounts = User::orderBy('created_at', 'desc')->get();
+        return view('dashboard.content.account', compact('site', 'accounts'));
+    }
+
+    public function editaccount($id)
+    {
+        $site = WebSettingModels::all()->first();
+        $account = User::find($id);
+        return view('dashboard.content.editaccount', compact('site', 'account'));
+    }
+
+    public function updateaccount(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+            ], [
+                'name.required' => 'Nama harus diisi.',
+                'email.required' => 'Email harus diisi.',
+                'email.email' => 'Email tidak valid.',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        }
+
+        $id_account = $request->id;
+        $DataAccount = User::find($id_account);
+        $GambarNew = $DataAccount->image;
+        $role = $DataAccount->superadmin;
+
+        if (!empty($request->role) || $request->role != '') {
+            $role = $request->role;
+        }
+
+        $gambar = $request->file('gambar');
+        if ($gambar) {
+            try {
+                $validatedData = $request->validate([
+                    'gambar' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:20480',
+                ], [
+                    'gambar.required' => 'Gambar harus diisi.',
+                    'gambar.file' => 'Gambar harus berupa file.',
+                    'gambar.image' => 'Gambar harus berupa gambar.',
+                    'gambar.mimes' => 'Gambar harus berupa JPEG, PNG, JPG, GIF, SVG',
+                    'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 200 MB.',
+                ]);
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return redirect()->back()->withErrors($e->errors())->withInput();
+            }
+
+            $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
+            $gambar->move('home/img/profile', $gambarName);
+            $GambarNew = 'home/img/profile/' . $gambarName;
+            if (file_exists($DataAccount->image)) {
+                unlink($DataAccount->image);
+            }
+        }
+    
+
+        $DataAccount->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'superadmin' => $role,
+            'image' => $GambarNew,
+        ]);
+        return redirect()->route('dashboard.account')->with('alert', [
+            'type' => 'success',
+            'message' => 'Akun Berhasil Diubah',
+            'title' => 'Berhasil'
+        ]);
     }
 }

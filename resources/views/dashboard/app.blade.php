@@ -23,7 +23,7 @@
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
     <link href="{{ asset('lib/lightbox2/css/lightbox.css') }}" rel="stylesheet" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -314,6 +314,7 @@
         }
     </script>
     <!-- Github buttons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('dashboard/js/soft-ui-dashboard.min.js?v=1.1.0') }}"></script>
