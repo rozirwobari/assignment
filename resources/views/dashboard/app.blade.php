@@ -34,7 +34,7 @@
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="{{ url('/') }}" target="_blank">
                 <img src="{{ asset('dashboard/img/logo-ct-dark.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">{{ config('app.name') }}</span>
+                <span class="ms-1 font-weight-bold">{{ $site->name }}</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
