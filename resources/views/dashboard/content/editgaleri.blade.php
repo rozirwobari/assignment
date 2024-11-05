@@ -14,7 +14,7 @@
                                 <input type="hidden" name="id_galeri" id="id_galeri" value="{{ $galeri->id }}">
                                 <div class="card-body py-2">
                                     <label for="deskripsi">Deskripsi</label>
-                                    <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Website">{{ old('deskripsi', $galeri->deskripsi) }}</textarea>
+                                    <textarea name="deskripsi" id="deskripsi" rows="10" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Website">{{ old('deskripsi', $galeri->deskripsi) }}</textarea>
                                     @error('deskripsi')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -35,7 +35,7 @@
                                                     Your browser does not support the video tag.
                                                 </video>
                                             @else
-                                                <a href="{{ asset($galeri->img) }}" data-lightbox="roadtrip" style="width: 200px; height: 200px; object-fit: cover; border-radius: 1vh; margin: 10px;">
+                                                <a href="{{ asset($galeri->img) }}" data-lightbox="roadtrip" style="width: 400px; height: auto; object-fit: cover; border-radius: 1vh; margin: 10px;">
                                                     <img src="{{ asset($galeri->img) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
                                                 </a>
                                             @endif
@@ -43,6 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-2">
+                                    <a href="{{ url('dashboard/galeri') }}" class="btn btn-primary mb-0 text-end">Kembali</a>
                                     <button type="submit" class="btn btn-dark mb-0 text-end">Simpan</button>
                                 </div>
                             </form>

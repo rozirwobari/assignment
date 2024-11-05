@@ -58,6 +58,9 @@
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
                     <ul class="navbar-nav  justify-content-end">
+                        <li class="nav-item d-flex align-items-center px-3">
+                            <p class="mb-0 text-sm">Selamat Datang, <span class="fw-bold">{{ Auth::user()->name }}</span></p>
+                        </li>
                         <li class="nav-item d-flex align-items-center">
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf

@@ -13,7 +13,7 @@
                                 @csrf
                                 <div class="card-body py-2">
                                     <label for="deskripsi">Deskripsi</label>
-                                    <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Website">{{ old('deskripsi') }}</textarea>
+                                    <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Galeri">{{ old('deskripsi') }}</textarea>
                                     @error('deskripsi')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -31,6 +31,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-2">
+                                    <a href="{{ url('dashboard/galeri') }}" class="btn btn-primary mb-0 text-end">Kembali</a>
                                     <button type="submit" class="btn btn-dark mb-0 text-end">Simpan</button>
                                 </div>
                             </form>

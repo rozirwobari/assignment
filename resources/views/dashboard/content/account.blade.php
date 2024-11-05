@@ -39,7 +39,7 @@
                                         </div>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm {{ $item->superadmin == '2' ? 'bg-gradient-success' : 'bg-gradient-warning' }}">{{ $item->superadmin == '2' ? 'Ya' : 'Tidak' }}</span>
+                                        <span class="badge badge-sm {{ $item->superadmin == '2' ? 'bg-gradient-success' : ($item->superadmin == '1' ? 'bg-gradient-primary' : 'bg-gradient-info') }}">{{ $item->superadmin == '2' ? 'Super Admin' : ($item->superadmin == '1' ? 'Admin' : 'User') }}</span>
                                     </td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{ $item->created_at->format('d M Y | H:i:s') }}</span>
@@ -52,9 +52,9 @@
                                             Edit
                                         </a>
                                         @if ($item->id != auth()->user()->id)
-                                        <a href="javascript:;" class="font-weight-bold btn btn-danger">
+                                        <button type="button" class="font-weight-bold btn btn-danger" onclick="hapususers({{ $item->id }})">
                                             Hapus
-                                        </a>
+                                        </button>
                                         @endif
                                     </td>
                                 </tr>
@@ -72,37 +72,31 @@
 
 @section('script')
     <script>
-        function deleteGambar(id_berita, id_gambar) {
+        function hapususers(id) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Hapus Akun?",
+                text: "Akun akan dihapus secara permanen!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Ya, hapus!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'POST',
-                        url: '{{ url('dashboard/deletegambar') }}',
+                        url: `{{ url('dashboard/deleteaccount') }}`,
                         data: {
                             '_token': '{{ csrf_token() }}',
-                            'id_berita': id_berita,
-                            'id_gambar': id_gambar
+                            'id': id
                         },
                         success: function(data) {
                             if(data.success) {
-                                Swal.fire({
-                                    title: "Berhasil!",
-                                    text: "Gambar Berhasil Dihapus.",
-                                    icon: "success"
-                                });
                                 location.reload();
                             } else {
                                 Swal.fire({
                                     title: "Gagal!",
-                                    text: "Gagal Menghapus Gambar.",
+                                    text: "Gagal Menghapus Akun.",
                                     icon: "error"
                                 });
                             }
@@ -110,7 +104,7 @@
                         error: function() {
                             Swal.fire({
                                 title: "Gagal!",
-                                text: "Gagal Menghapus Gambar.",
+                                text: "Gagal Menghapus Akun.",
                                 icon: "error"
                             });
                         }

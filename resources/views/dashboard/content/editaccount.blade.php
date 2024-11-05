@@ -58,6 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-2">
+                                    <a href="{{ url('dashboard/account') }}" class="btn btn-primary mb-0 text-end">Kembali</a>
                                     <button type="submit" class="btn btn-dark mb-0 text-end">Simpan</button>
                                 </div>
                             </form>

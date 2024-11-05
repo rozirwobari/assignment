@@ -39,6 +39,9 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/account', [DashboardController::class, 'account'])->name('dashboard.account');
     Route::get('/editaccount/{id}', [DashboardController::class, 'editaccount']);
     Route::post('/updateaccount', [DashboardController::class, 'updateaccount']);
+    Route::post('/deleteaccount', [DashboardController::class, 'deleteaccount']);
+    Route::get('/logs', [DashboardController::class, 'logs'])->name('dashboard.logs');
+    Route::get('/detaillogs/{id}', [DashboardController::class, 'detaillogs']);
 });
 
 

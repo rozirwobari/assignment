@@ -41,13 +41,14 @@
                                                 <a href="{{ asset($item->img) }}" data-lightbox="roadtrip">
                                                     <img src="{{ asset($item->img) }}" alt="Banner" class="img-fluid" style="width: 250px; height: 250px; object-fit: cover; border-radius: 1vh;">
                                                 </a>
-                                                <button type="button" onclick="deleteGambar({{ $berita->id }}, {{ $item->id }})" class="btn btn-primary mt-3">Hapus</button>
+                                                <button type="button" onclick="deleteGambar({{ $berita->id }}, {{ $item->id }})" class="btn btn-danger mt-3">Hapus</button>
                                             </div>
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
                                 <div class="text-center py-2">
+                                    <a href="{{ url('dashboard/berita') }}" class="btn btn-primary mb-0 text-end">Kembali</a>
                                     <button type="submit" class="btn btn-dark mb-0 text-end">Simpan</button>
                                 </div>
                             </form>
