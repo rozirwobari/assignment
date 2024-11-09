@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\ProfileController;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/berita', [HomeController::class, 'berita']);
 Route::get('/pengumuman', [HomeController::class, 'pengumuman']);
@@ -42,6 +42,9 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/deleteaccount', [DashboardController::class, 'deleteaccount']);
     Route::get('/logs', [DashboardController::class, 'logs'])->name('dashboard.logs');
     Route::get('/detaillogs/{id}', [DashboardController::class, 'detaillogs']);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/photo_profile', [ProfileController::class, 'photoprofile']);
+    Route::post('/editprofile', [ProfileController::class, 'editprofile']);
 });
 
 
