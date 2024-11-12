@@ -707,7 +707,7 @@
 
 /*** Team Start ***/
 .team .team-item {
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
     border: 1px solid var(--bs-dark);
     transition: 0.5s;

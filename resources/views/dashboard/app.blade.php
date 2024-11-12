@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
 </head>
 
+@yield('style')
+
 <body class="g-sidenav-show  bg-gray-100">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-white"
         id="sidenav-main">
@@ -322,6 +324,7 @@
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('dashboard/js/soft-ui-dashboard.min.js?v=1.1.0') }}"></script>
     <script src="{{ asset('lib/lightbox2/js/lightbox.js') }}"></script>
+    <script src="{{ asset('home/lib/balkan/orgchart.js') }}"></script>
 
 
     @yield('script')

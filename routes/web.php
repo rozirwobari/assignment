@@ -5,6 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StrukturController;
+
+
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/berita', [HomeController::class, 'berita']);
 Route::get('/pengumuman', [HomeController::class, 'pengumuman']);
@@ -13,6 +16,7 @@ Route::get('/sejarah', [HomeController::class, 'sejarah']);
 Route::get('/visimisi', [HomeController::class, 'visimisi']);
 Route::get('/kontak', [HomeController::class, 'kontak']);
 Route::post('/kontak', [HomeController::class, 'kirimpesan']);
+Route::get('/struktur', [HomeController::class, 'struktur']);
 // Dashboard
 Route::prefix('dashboard')->group(function () {
     Route::get('/home', [DashboardController::class, 'index']);
@@ -36,6 +40,7 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/updategaleri', [DashboardController::class, 'updategaleri']);
     Route::post('/deletegaleri', [DashboardController::class, 'deletegaleri']);
     Route::post('/favicon', [DashboardController::class, 'favicon']);
+    Route::post('/logo', [DashboardController::class, 'logo']);
     Route::get('/account', [DashboardController::class, 'account'])->name('dashboard.account');
     Route::get('/editaccount/{id}', [DashboardController::class, 'editaccount']);
     Route::post('/updateaccount', [DashboardController::class, 'updateaccount']);
@@ -45,6 +50,8 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::post('/photo_profile', [ProfileController::class, 'photoprofile']);
     Route::post('/editprofile', [ProfileController::class, 'editprofile']);
+    Route::get('/struktur', [StrukturController::class, 'index']);
+    Route::post('/struktur', [StrukturController::class, 'store']);
 });
 
 

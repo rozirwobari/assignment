@@ -20,6 +20,7 @@ return new class extends Migration
             $table->mediumText('visi')->nullable();
             $table->mediumText('misi')->nullable();
             $table->longText('sejarah')->nullable();
+            $table->mediumText('logo')->nullable();
             $table->timestamps();
         });
 

@@ -49,19 +49,19 @@
 
                 @foreach ($users as $item)
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="{{ asset('home/img/team-2.jpg') }}" data-lightbox="team">
-                        <div class="team-item rounded">
+                    <div class="team-item rounded">
+                        <a href="{{ asset($item->image) }}" data-lightbox="team">
                             <div class="team-img">
-                                <img src="{{ asset('home/img/team-2.jpg') }}" class="img-fluid w-100 rounded-top" alt="Image">
+                                <img src="{{ asset($item->image) }}" class="img-fluid w-100 rounded-top" alt="Image" style="width: 250px; height: 250px; object-fit: cover;">
                             </div>
-                            <div class="team-content bg-dark text-center rounded-bottom p-4">
-                                <div class="team-content-inner rounded-bottom">
-                                    <h4 class="text-white">{{ $item->name }}</h4>
-                                    <p class="text-muted mb-0">{{ $item->email }}</p>
-                                </div>
+                        </a>
+                        <div class="team-content bg-dark text-center rounded-bottom p-4">
+                            <div class="team-content-inner rounded-bottom">
+                                <h4 class="text-white">{{ $item->name }}</h4>
+                                <p class="text-muted mb-0">{{ $item->email }}</p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 @endforeach
             </div>

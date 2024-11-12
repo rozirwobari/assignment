@@ -33,6 +33,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     </head>
+        @yield('style')
 
     <body>
 
@@ -74,9 +75,8 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-white py-3 px-4" style="border-radius: 0.8vh;">
-                    <a href="index.html" class="navbar-brand p-0">
-                        <h1 class="text-primary m-0"><i class="fas fa-donate me-3"></i>LOGO</h1>
-                        <!-- <img src="img/logo.png" alt="Logo"> -->
+                    <a href="{{ url('/') }}" class="navbar-brand p-0">
+                        <img src="{{ asset($site->logo) }}" alt="Logo" style="width: auto; height: 45px; object-fit: cover;">
                     </a>
                     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars"></span>
@@ -90,7 +90,7 @@
                                     <a href="{{ url('sejarah') }}" class="dropdown-item">Sejarah</a>
                                     <a href="{{ url('visimisi') }}" class="dropdown-item">Visi Misi</a>
                                     <a href="testimonial.html" class="dropdown-item">Tugas Dan Fungsi</a>
-                                    <a href="faqs.html" class="dropdown-item">Struktur Organisasi</a>
+                                    <a href="{{ url('struktur') }}" class="dropdown-item">Struktur Organisasi</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
@@ -200,6 +200,7 @@
     <script src="{{ asset('home/lib/counterup/counterup.min.js') }}"></script>
     <script src="{{ asset('home/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('home/lib/lightbox/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('home/lib/balkan/orgchart.js') }}"></script>
     @yield('script')
 
     <!-- Template Javascript -->

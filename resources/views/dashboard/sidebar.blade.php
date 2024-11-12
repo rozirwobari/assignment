@@ -67,6 +67,59 @@
                 <span class="nav-link-text ms-1">Galeri</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('dashboard/struktur') || request()->is('dashboard/struktur') ? 'active' : '' }}" href="{{ url('/dashboard/struktur') }}">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <svg version="1.1" width="19px" height="19px" id="fi_686887" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 414.4 414.4" style="enable-background:new 0 0 414.4 414.4;" xml:space="preserve">
+                        <g>
+                            <g>
+                                <path d="M397.6,249.2h-32.8v-42.4c0-4.8-3.2-8-8-8H215.2v-34.4H248c9.6,0,16.8-7.2,16.8-16.8V66.8c0-9.6-7.2-16.8-16.8-16.8h-81.6
+                                    c-9.6,0-16.8,7.2-16.8,16.8v81.6c0,9.6,7.2,16.8,16.8,16.8h32.8v33.6H57.6c-4.8,0-8,3.2-8,8v42.4H16.8C7.2,249.2,0,256.4,0,266
+                                    v81.6c0,9.6,7.2,16.8,16.8,16.8h81.6c9.6,0,16.8-7.2,16.8-16.8V266c0-9.6-7.2-16.8-16.8-16.8H65.6v-34.4h133.6v34.4h-32.8
+                                    c-9.6,0-16.8,7.2-16.8,16.8v81.6c0,9.6,7.2,16.8,16.8,16.8H248c9.6,0,16.8-7.2,16.8-16.8V266c0-9.6-7.2-16.8-16.8-16.8h-32.8
+                                    v-34.4h133.6v34.4H316c-9.6,0-16.8,7.2-16.8,16.8v81.6c0,9.6,7.2,16.8,16.8,16.8h81.6c9.6,0,16.8-7.2,16.8-16.8V266
+                                    C414.4,256.4,406.4,249.2,397.6,249.2z M99.2,266C98.4,265.2,99.2,265.2,99.2,266v81.6c0,0.8,0,0.8-0.8,0.8H16.8
+                                    c-0.8,0-0.8,0-0.8-0.8V266c0-0.8,0-0.8,0.8-0.8L99.2,266z M248.8,266C248,265.2,248.8,265.2,248.8,266v81.6c0,0.8,0,0.8-0.8,0.8
+                                    h-81.6c-0.8,0-0.8,0-0.8-0.8V266c0-0.8,0-0.8,0.8-0.8L248.8,266z M165.6,147.6C166.4,148.4,165.6,148.4,165.6,147.6V66.8
+                                    c0-0.8,0-0.8,0.8-0.8H248c0.8,0,0.8,0,0.8,0.8v81.6c0,0.8,0,0.8-0.8,0.8L165.6,147.6z M398.4,346.8
+                                    C398.4,347.6,397.6,347.6,398.4,346.8l-82.4,0.8c-0.8,0-0.8,0-0.8-0.8V266c0-0.8,0-0.8,0.8-0.8h81.6c0.8,0,0.8,0,0.8,0.8V346.8z"></path>
+                            </g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        </svg>
+                </div>
+                <span class="nav-link-text ms-1">Struktur Organisasi</span>
+            </a>
+        </li>
         
         <li class="nav-item mt-3">
             <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>

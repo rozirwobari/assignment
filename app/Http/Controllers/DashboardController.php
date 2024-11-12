@@ -446,6 +446,68 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function logo(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'logo' => 'required|image|mimes:jpg,jpeg,png',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->with('alert', [
+                'type' => 'error',
+                'message' => 'Gagal menambahkan logo',
+                'title' => 'Error'
+            ]);
+        }
+
+        $site = WebSettingModels::all()->first();
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $logoName = Str::random(10) . '.' . $logo->getClientOriginalExtension();
+            $logo->move('home/img/logo', $logoName);
+            if (file_exists($site->logo)) {
+                unlink($site->logo);
+            }
+
+            // Add To Logs
+            $logs = new LogsController();
+            $logs->store('update', "Logo Diperbarui", [
+                [
+                    'label' => 'Sebelumnya',
+                    'hr' => true,
+                ],
+                [
+                    'label' => 'Logo',
+                    'value' => $site->logo,
+                ],
+                [
+                    'label' => 'Sekarang',
+                    'hr' => true,
+                ],
+                [
+                    'label' => 'Logo',
+                    'value' => 'home/img/logo/' . $logoName,
+                ],
+            ]);
+
+            $site->update([
+                'logo' => 'home/img/logo/' . $logoName,
+            ]);
+
+            return redirect()->back()->with('alert', [
+                'type' => 'success',
+                'message' => 'Logo Berhasil Diubah',
+                'title' => 'Berhasil'
+            ]);
+        }
+
+        return redirect()->back()->with('alert', [
+            'type' => 'warning',
+            'message' => 'Tidak Ada Perubahan Di Logo',
+            'title' => 'Warning'
+        ]);
+    }
+
     public function addbanner(Request $request)
     {
         try {

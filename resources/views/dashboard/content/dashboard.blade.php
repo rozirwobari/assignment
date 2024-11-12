@@ -55,14 +55,36 @@
             <div class="col-12 mb-lg-0 mb-4">
                 <div class="card">
                     <div class="container pt-5 text-center">
+                        <a href="{{ asset($site->logo) }}" data-lightbox="roadtrip">
+                            <img src="{{ asset($site->logo) }}" alt="Favivon" class="img-fluid" style="width: auto; height: 150px; object-fit: cover; border-radius: 1vh;">
+                        </a>
+                    </div>
+                    <div class="container text-center">
+                        <span class="text-danger" style="user-select: none; font-size: 13px;">Recommended Height Max 45px</span>
+                    </div>
+                    <div class="container py-3">
+                        <form action="{{ url('dashboard/logo') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body py-2">
+                                <label for="judul">Logo</label>
+                                <input type="file" name="logo" id="logo" class="form-control">
+                            </div>
+                            <div class="text-center py-2">
+                                <button type="submit" class="btn btn-dark mb-0 text-end">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 mb-lg-0 mb-4">
+            <div class="col-12 mb-lg-0 mb-4">
+                <div class="card">
+                    <div class="container pt-5 text-center">
                         <a href="{{ asset($site->favicon) }}" data-lightbox="roadtrip">
                             <img src="{{ asset($site->favicon) }}" alt="Favivon" class="img-fluid" style="width: 150px; height: 150px; object-fit: cover; border-radius: 1vh;">
                         </a>
                     </div>
-                </div>
-            </div>
-            <div class="col-12 mb-lg-0 mb-4">
-                <div class="card">
                     <div class="container py-3">
                         <form action="{{ url('dashboard/favicon') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -75,26 +97,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-12 mb-lg-0 mb-4">
-            <div class="card">
-                <div class="container py-3">
-                    <form action="{{ url('dashboard/visimisi') }}" method="POST">
-                        @csrf
-                        <div class="card-body py-2">
-                            <label for="judul">Visi</label>
-                            <textarea name="visi" id="visi" class="form-control" placeholder="Masukan Visi">{{ $site->visi }}</textarea>
-                        </div>
-                        <div class="card-body py-2">
-                            <label for="judul">Misi</label>
-                            <textarea name="misi" id="misi" class="form-control" placeholder="Masukan Misi">{{ $site->misi }}</textarea>
-                        </div>
-                        <div class="text-center py-2">
-                            <button type="submit" class="btn btn-dark mb-0 text-end">Simpan</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

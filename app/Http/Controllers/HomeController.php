@@ -7,6 +7,7 @@ use App\Models\WebSettingModels;
 use App\Models\KontakModels;
 use App\Models\GaleriModels;
 use App\Models\User;
+use App\Models\StrukturModels;
 use App\Mail\KontakKami;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class HomeController extends Controller
     public function index()
     {
         $berita = BeritaModels::orderBy('created_at', 'desc')->get();
-        $users = User::where('superadmin', 0)->get();
+        // $users = User::where('superadmin', 0)->get();
+        $users = User::all();
         $site = WebSettingModels::all()->first();
         $kontak = KontakModels::all()->first();
         $galeri = GaleriModels::orderBy('created_at', 'desc')->get();
@@ -123,6 +125,17 @@ class HomeController extends Controller
             'message' => 'Pesan Berhasil Dikirim',
             'title' => 'Berhasil'
         ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function struktur()
+    {
+        $site = WebSettingModels::all()->first();
+        $kontak = KontakModels::all()->first();
+        $struktur = StrukturModels::all();
+        return view('home.content.struktur', compact('site', 'kontak', 'struktur'));
     }
 
 
