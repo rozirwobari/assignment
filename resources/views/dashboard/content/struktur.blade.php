@@ -87,17 +87,19 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Akun</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Jabatan</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 3%">ID</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Akun</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jabatan</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Parent</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($struktur as $item)
                                         <tr>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">{{ $item->id }}</span>
+                                            </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
@@ -113,8 +115,10 @@
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{ $item->title
-                                                    }}</span>
+                                                <span class="text-secondary text-xs font-weight-bold">{{ $item->title }}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">{{ $item->pid ? $item->pid : 'Tidak Ada' }}</span>
                                             </td>
                                             <td class="align-middle text-center text-center">
                                                 <button type="button" class="font-weight-bold btn btn-danger"
