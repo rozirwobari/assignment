@@ -94,8 +94,20 @@ class StrukturController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+        $struktur = StrukturModels::find($id);
+        if ($struktur) {
+            $struktur->delete();
+            session()->flash('alert', [
+                'type' => 'success',
+                'message' => 'Data Berhasil Dihapus',
+                'title' => 'Berhasil'
+            ]);
+            return response()->json(['success' => true], 200);
+        } else {
+            return response()->json(['success' => false], 404);
+        }
     }
 }

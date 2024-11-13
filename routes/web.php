@@ -52,6 +52,7 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/editprofile', [ProfileController::class, 'editprofile']);
     Route::get('/struktur', [StrukturController::class, 'index']);
     Route::post('/struktur', [StrukturController::class, 'store']);
+    Route::post('/destroystruktur', [StrukturController::class, 'destroy']);
 });
 
 
