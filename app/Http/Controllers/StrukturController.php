@@ -99,6 +99,7 @@ class StrukturController extends Controller
         $id = $request->id;
         $struktur = StrukturModels::find($id);
         if ($struktur) {
+            StrukturModels::where('pid', $struktur->pid)->update(['pid' => null]);
             $struktur->delete();
             session()->flash('alert', [
                 'type' => 'success',
